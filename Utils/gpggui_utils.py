@@ -71,10 +71,10 @@ def get_email() -> str | None:
     return inpt
 
 
-def get_pubkey()->str|None:
-    keyfile=sg.popup_get_file()
+# TODO
+def get_pubkey() -> str | None:
+    keyfile = sg.popup_get_file()
     run("gpg", "--import", keyfile)
-
 
 
 def trash(file: str):

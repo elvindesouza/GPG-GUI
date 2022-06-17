@@ -18,6 +18,7 @@ def decrypt_folders(folders: list[tuple[str, str]] = None):
         files = [
             str(x) for x in Path(dst).rglob("*") if x.is_file() and x.suffix == ".gpg"
         ]
+        print(files)
         if not decrypt_files(files):
             return
         for file in files:

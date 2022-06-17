@@ -1,6 +1,6 @@
 from pathlib import Path
 from subprocess import run
-from ..Utils.gpggui_utils import choose_files, get_email, get_pubkey
+from ..Utils.gpggui_utils import choose_files, get_email
 from PySimpleGUI import popup
 
 
@@ -13,10 +13,7 @@ def encrypt_files(files: list[str] = None, email: str = None) -> bool:
     if not email:
         email = get_email()
     if not email:
-        global pubkey
-        pubkey = get_pubkey()
-        if not pubkey:
-            return False
+        return False
 
     for file in files:
         ps: CompletedProcess[str] = run(

@@ -1,4 +1,4 @@
-from ..Utils.gpggui_utils import choose_folders, get_email, get_pubkey, trash
+from ..Utils.gpggui_utils import choose_folders, get_email
 from ..Encrypt.encrypt_files import encrypt_files
 from shutil import copytree
 from pathlib import Path
@@ -14,7 +14,7 @@ def encrypt_folders(folders: list[tuple[str, str]] = None) -> None:
 
     email = get_email()
     if not email:
-        get_pubkey()
+        return
 
     for src, dst in folders:
         copytree(src, dst, dirs_exist_ok=True)
