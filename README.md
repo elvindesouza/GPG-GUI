@@ -13,7 +13,7 @@ _the source code is available [here](https://github.com/elvindsouza/GPG-GUI)_
 `git clone` this repository
 `cd` or `dir` into the repository tree root
 
-set up the virtual environment and simply activate it after installing the required packages to run
+After initial setup/set up of the virtual environment and installing of packages, simply activate it after installing the required packages to run
 
 ## Microsoft Windows
 
@@ -28,8 +28,18 @@ PS> new-venv\Scripts\Activate.ps1
 
 ```
 $ python -m venv new-venv
+
 $ source new-venv/bin/activate
+
 (new-venv) $ python -m pip install -r requirements.txt
+
+(new-venv) $ echo "
+cd $VIRTUAL_ENV
+cd ..
+cd ..
+python3 -m GPG-GUI
+" >> new-venv/bin/activate
+
 (new-venv) $ source new-venv/bin/activate
 ```
 
