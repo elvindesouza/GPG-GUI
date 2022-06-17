@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 
 layout = [
-    [sg.Text("Encryption-Decryption made easy!")],
+    [sg.Text("Encryption-Decryption made easy!", background_color="black")],
     [sg.Button("Encrypt file(s)", key="-FILE-")],
     [sg.Button("Encrypt folder(s)", key="-FOLD-")],
     [sg.Button("Decrypt file(s)", key="-DFILE-")],
@@ -14,4 +14,4 @@ layout = [
 
 def get_window() -> sg.Window:
     # sg.ChangeLookAndFeel("topanga")
-    return sg.Window("GPG-GUI", layout)
+    return sg.Window("GPG-GUI", layout, scaling=2, background_color="black")

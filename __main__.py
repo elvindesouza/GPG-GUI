@@ -1,10 +1,10 @@
-from Decrypt.decrypt_files import decrypt_files
-from Decrypt.decrypt_folders import decrypt_folders
-from Encrypt.encrypt_files import encrypt_files
-from Encrypt.encrypt_folders import encrypt_folders
-from Utils.gpggui_utils import create_keys
+from .Decrypt.decrypt_files import decrypt_files
+from .Decrypt.decrypt_folders import decrypt_folders
+from .Encrypt.encrypt_files import encrypt_files
+from .Encrypt.encrypt_folders import encrypt_folders
+from .Utils.gpggui_utils import create_keys
 
-from layout import get_window
+from .layout import get_window
 
 
 if __name__ == "__main__":
@@ -21,8 +21,7 @@ if __name__ == "__main__":
         match event:
             case "-FILE-":
                 encrypt_files()
-            case "-FOLD-":
-                encrypt_folders()
+            case "-FOLD-": encrypt_folders()
             case "-DFILE-":
                 decrypt_files()
             case "-DFOLD-":

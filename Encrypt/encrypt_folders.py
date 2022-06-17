@@ -1,14 +1,14 @@
+from ..Utils.gpggui_utils import choose_folders, get_email, get_pubkey, trash
+from ..Encrypt.encrypt_files import encrypt_files
+from shutil import copytree
+from pathlib import Path
+
+# TODO implement pubkey
+
 # direct way to encrypt full folders w/ GPG
-
-
-def encrypt_folders(folders=None):
-    from Utils.gpggui_utils import choose_folders, get_email, get_pubkey
-    from PySimpleGUI import popup,popup_yes_no
-    from pathlib import Path
-    from subprocess import CompletedProcess, run
-
+def encrypt_folders(folders: list[tuple[str, str]] = None) -> None:
     if not folders:
-        folders:list[str]|None=choose_folders()
+        folders = choose_folders("Encrypting Folders", "encrypt")
     if not folders:
         return
 
@@ -16,24 +16,12 @@ def encrypt_folders(folders=None):
     if not email:
         get_pubkey()
 
-    for folder in folders:
-        ps = run(["find", f"{folder}"], capture_output=True, encoding="utf-8")
-        files:list[str] = ps.stdout.split("\n")
-        ps:CompletedProcess[str] = run(
-            f"find . | /usr/bin/gpg --multifile --yes --encrypt-files -r {email}",
-            cwd=folder,
-            shell=True,
-            encoding="utf-8",
-            capture_output=True,
-        )
-        if ps.stderr:
-            popup(
-                "There were a few errors\nReview errors and see if you want to delete files\n"
-                + ps.stderr
-            )
-        should_del:str = popup_yes_no("Delete the original file(s)?")
-        if should_del != "Yes":
+    for src, dst in folders:
+        copytree(src, dst, dirs_exist_ok=True)
+        files = [
+            str(x) for x in Path(dst).rglob("*") if x.is_file() and x.suffix != ".gpg"
+        ]
+        if not encrypt_files(files, email):
             return
         for file in files:
-            if Path(file).is_file():
-                run(["/usr/bin/trash", f"{file}"], cwd=Path(folder).parent)
+            trash(file)

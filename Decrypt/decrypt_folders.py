@@ -1,23 +1,24 @@
-# choose better approach? like create  a separate folder like decompressing an archive
-def decrypt_folders(folders: list[str] = None):
-    from pathlib import Path
-    from Decrypt.decrypt_files import decrypt_files
-    from Utils.gpggui_utils import choose_folders
-    from PySimpleGUI import popup_get_folder
+from .decrypt_files import decrypt_files
+from ..Utils.gpggui_utils import choose_folders, trash
+from shutil import copytree
+from pathlib import Path
 
+
+# TODO edit sel_folds() to ask for dst for every src, and be tuple[str,str] instead
+def decrypt_folders(folders: list[tuple[str, str]] = None):
     if not folders:
-        folders: list[str] = choose_folders()
+        folders: list[tuple[str, str]] = choose_folders(
+            "Decrypting Folders",
+            "decrypt",
+        )
     if not folders:
         return
-    print(folders)
-    for folder in folders:
-        target_folder: str = popup_get_folder(
-            "Cancel to use same path(merge)",
-            title=f"Directory to decrypt {folder} to-",
-            default_path=Path(folder).parent,
-        )
-        if not target_folder:
-            target_folder = (Path(folder).parent)
-        decrypt_files(
-            [str(x) for x in Path(folder).rglob("*") if x.is_file()],target_folder
-        )
+    for src, dst in folders:
+        copytree(src, dst, dirs_exist_ok=True)
+        files = [
+            str(x) for x in Path(dst).rglob("*") if x.is_file() and x.suffix == ".gpg"
+        ]
+        if not decrypt_files(files):
+            return
+        for file in files:
+            trash(file)
