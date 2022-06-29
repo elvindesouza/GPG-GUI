@@ -1,4 +1,4 @@
-from ..Utils.gpggui_utils import choose_folders, get_email
+from ..Utils.gpggui_utils import choose_folders, get_email, trash
 from ..Encrypt.encrypt_files import encrypt_files
 from shutil import copytree
 from pathlib import Path
