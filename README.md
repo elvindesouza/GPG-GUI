@@ -2,7 +2,7 @@
 
 ## Simple front-end to GnuPG. Making securing files easy and accessible. Comes with an unstable CLI.
 
-_the source code is available [here](https://github.com/elvindsouza/GPG-GUI)_
+_the source code is available [here](https://github.com/elvindesouza/GPG-GUI)_
 
 ---
 

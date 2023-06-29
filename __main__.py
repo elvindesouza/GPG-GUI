@@ -21,7 +21,8 @@ if __name__ == "__main__":
         match event:
             case "-FILE-":
                 encrypt_files()
-            case "-FOLD-": encrypt_folders()
+            case "-FOLD-":
+                encrypt_folders()
             case "-DFILE-":
                 decrypt_files()
             case "-DFOLD-":
